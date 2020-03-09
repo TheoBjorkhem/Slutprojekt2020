@@ -10,6 +10,13 @@ namespace Slutprojekt2020
     {
         static void Main(string[] args)
         {
+            //Variabler
+
+
+            Console.WriteLine("!!!");
+
+
+            Console.ReadLine();
         }
     }
 }
