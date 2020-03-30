@@ -8,7 +8,15 @@ namespace Slutprojekt2020
 {
     class LootRoom : Room
     {
+        //Variabler
 
+        //Metoder
+        public LootRoom()
+        {
+            roomList.Add(this);
+            enemyAmount = 0;
+            goldAmount = generator.Next(5, 16);
+        }
 
 
     }

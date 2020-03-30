@@ -12,6 +12,11 @@ namespace Slutprojekt2020
         public bool hasHealed = true;
 
         //Metoder
-
+        public SafeRoom()
+        {
+            roomList.Add(this);
+            enemyAmount = 0;
+            goldAmount = generator.Next(0, 6);
+        }
     }
 }

@@ -11,6 +11,12 @@ namespace Slutprojekt2020
         //Variabler
 
         //Metoder
+        public Room()
+        {
+            roomList.Add(this);
+            enemyAmount = 0;
+            goldAmount = generator.Next(0, 4);
+        }
         public void Buy ()
         {
 

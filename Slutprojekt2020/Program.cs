@@ -17,18 +17,24 @@ namespace Slutprojekt2020
 
             //Spelloop
             Intro();
+            Player p1 = new Player();
+            FirstRoom();
             while (roomsCleared < 10)
             {
-                bool correct = false;
-                output = Check(Console.ReadLine());
-                outputInt = Convert(output);
+                output = Convert(Console.ReadLine());
+                outputInt = Check(output);
 
-                while (correct == false)
+                if (outputInt == 1)
                 {
-                    if (output != "q")
-                    {
+                    Console.WriteLine("You have " + p1.hp + " HP.");
+                }
+                else if (outputInt == 2)
+                {
+                    Console.WriteLine("You have " + p1.dmg + " DMG.");
+                }
+                else if (outputInt == 3)
+                {
 
-                    }
                 }
 
 
@@ -55,13 +61,24 @@ namespace Slutprojekt2020
                     "\nYou are currently in a room with only a path North." +
                     "\nGood Luck");
             }
-            string Check (string inp)
+            void FirstRoom ()
+            {
+                SafeRoom s1= new SafeRoom();
+                s1.canAttack = false;
+                s1.isEast = false;
+                s1.isWest = false;
+                s1.isSouth = false;
+                s1.isNorth = true;
+                s1.goldAmount = 0;
+                s1.enemyAmount = 0;
+            }
+            string Convert (string inp)
             {
                 string inputLower = " ";
                 inputLower = inp.ToLower();
                 return inputLower;
             }
-            int Convert (string inp)
+            int Check (string inp)
             {
                 int outP = 0;
                 if (inp == "hp?")

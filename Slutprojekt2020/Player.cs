@@ -11,6 +11,7 @@ namespace Slutprojekt2020
         //Variabler
         public int hp = 0;
         public int dmg = 0;
+        public int currentRoom = 0;
 
         Random generator = new Random();
 
