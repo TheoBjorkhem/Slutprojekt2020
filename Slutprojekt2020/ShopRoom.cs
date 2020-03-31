@@ -11,7 +11,7 @@ namespace Slutprojekt2020
         //Variabler
 
         //Metoder
-        public Room()
+        public ShopRoom()
         {
             roomList.Add(this);
             enemyAmount = 0;

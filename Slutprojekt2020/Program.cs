@@ -11,14 +11,18 @@ namespace Slutprojekt2020
         static void Main(string[] args)
         {
             //Variabler
+            int currentRoom = 0;
             int roomsCleared = 0;
             int outputInt = 0;
             string output = " ";
+
 
             //Spelloop
             Intro();
             Player p1 = new Player();
             FirstRoom();
+            currentRoom++;
+
             while (roomsCleared < 10)
             {
                 output = Convert(Console.ReadLine());
@@ -34,11 +38,32 @@ namespace Slutprojekt2020
                 }
                 else if (outputInt == 3)
                 {
-
+                    if (Room.roomList.Count == currentRoom)
+                    {
+                        Room.roomList.Add(new Room());
+                        Info();
+                    }
+                    currentRoom++;
+                    //Console.WriteLine(Room.roomList.Count);
+                }
+                else if (outputInt == 4)
+                {
+                    if (currentRoom < 1)
+                    {
+                        Console.WriteLine("You can't go south in this room.");
+                    }
+                    if (currentRoom > 0)
+                    {
+                        currentRoom--;
+                    }
+                }
+                else if (outputInt == 5)
+                {
+                    Intro();
                 }
 
 
-                Console.WriteLine(output);
+                //Console.WriteLine(output);
             }
 
 
@@ -55,22 +80,23 @@ namespace Slutprojekt2020
                     "\nType 'DMG?' to see your damage output." +
                     "\nType 'GoS' to go South." +
                     "\nType 'GoN' to go North." +
-                    "\nType 'GoW' to go West." +
-                    "\nType 'GoE' to go East." +
                     "\nType 'Help' to get a reminder of this." +
-                    "\nYou are currently in a room with only a path North." +
                     "\nGood Luck");
             }
             void FirstRoom ()
             {
-                SafeRoom s1= new SafeRoom();
-                s1.canAttack = false;
-                s1.isEast = false;
-                s1.isWest = false;
-                s1.isSouth = false;
-                s1.isNorth = true;
-                s1.goldAmount = 0;
-                s1.enemyAmount = 0;
+                Room.roomList.Add(new Room());
+                Room.roomList[0].canAttack = false;
+                Room.roomList[0].isSouth = false;
+                Room.roomList[0].isNorth = true;
+                Room.roomList[0].goldAmount = 0;
+                Room.roomList[0].enemyAmount = 0;
+                Console.WriteLine("You are currently in a Safe Room with only a path North.");
+            }
+            void Info ()
+            {
+                Console.WriteLine("There are " + Room.roomList[currentRoom].enemyAmount + " enemys in this room." +
+                    "\n");
             }
             string Convert (string inp)
             {
@@ -89,25 +115,17 @@ namespace Slutprojekt2020
                 {
                     outP = 2;
                 }
-                else if (inp == "gos")
+                else if (inp == "gon")
                 {
                     outP = 3;
                 }
-                else if (inp == "gon")
+                else if (inp == "gos")
                 {
                     outP = 4;
                 }
-                else if (inp == "gow")
-                {
-                    outP = 5;
-                }
-                else if (inp == "goe")
-                {
-                    outP = 6;
-                }
                 else if (inp == "help")
                 {
-                    outP = 7;
+                    outP = 5;
                 }
                 else
                 {
