@@ -12,19 +12,21 @@ namespace Slutprojekt2020
         {
             //Variabler
             int currentRoom = 0;
-            int roomsCleared = 0;
             int outputInt = 0;
             string output = " ";
-
+            Random generator = new Random();
 
             //Spelloop
             Intro();
             Player p1 = new Player();
             FirstRoom();
-            currentRoom++;
+            currentRoom = 1;
 
-            while (roomsCleared < 10)
+            while (currentRoom < 10 && p1.hp > 0)
             {
+                //Console.WriteLine(Room.roomList.Count);
+                //Console.WriteLine(currentRoom);
+
                 output = Convert(Console.ReadLine());
                 outputInt = Check(output);
 
@@ -40,24 +42,76 @@ namespace Slutprojekt2020
                 {
                     if (Room.roomList.Count == currentRoom)
                     {
-                        Room.roomList.Add(new Room());
+                        int roomDecider = generator.Next(0, 100);
+                        if (roomDecider <= 59)
+                        {
+                            Room.roomList.Add(new Room());
+                            Info();
+                        }
+                        else if (roomDecider >= 60 && roomDecider <= 69)
+                        {
+                            Room.roomList.Add(new SafeRoom());
+                            Info();
+                        }
+                        else if (roomDecider >= 70 && roomDecider <= 79)
+                        {
+                            Room.roomList.Add(new DangerRoom());
+                            Info();
+                        }
+                        else if (roomDecider >= 80 && roomDecider <= 89)
+                        {
+                            Room.roomList.Add(new LootRoom());
+                            Info();
+                        }
+                        else if (roomDecider >= 90 && roomDecider <= 99)
+                        {
+                            Room.roomList.Add(new ShopRoom());
+                            Info();
+                        }
+                        currentRoom++;
+                    }
+                    else
+                    {
                         Info();
                     }
-                    currentRoom++;
-                    //Console.WriteLine(Room.roomList.Count);
                 }
                 else if (outputInt == 4)
                 {
-                    if (currentRoom < 1)
+                    if (currentRoom == 1)
                     {
                         Console.WriteLine("You can't go south in this room.");
                     }
-                    if (currentRoom > 0)
+                    if (currentRoom > 1)
                     {
                         currentRoom--;
                     }
                 }
                 else if (outputInt == 5)
+                {
+                    if (Room.roomList[currentRoom].enemyAmount > 0)
+                    {
+                        p1.hp = p1.hp - (Room.roomList[currentRoom].enemyAmount / p1.dmg);
+                        if (p1.hp > 0)
+                        {
+                            Console.WriteLine("You defeated all " + Room.roomList[currentRoom].enemyAmount + " enemies and took the " +
+                                Room.roomList[currentRoom].goldAmount + " gold coins." +
+                                "\nYou now have " + p1.gold + " gold coins.");
+                            Room.roomList[currentRoom].enemyAmount = 0;
+                        }
+                        else if (p1.hp < 1)
+                        {
+                            Console.WriteLine("You failed to defeat all the enemies without dying.");
+                        }
+                    }
+
+                }
+                else if (outputInt == 6)
+                {
+                }
+                else if (outputInt == 7)
+                {
+                }
+                else if (outputInt == 8)
                 {
                     Intro();
                 }
@@ -66,7 +120,7 @@ namespace Slutprojekt2020
                 //Console.WriteLine(output);
             }
 
-
+            End();
             Console.ReadLine();
 
             //Metoder
@@ -74,12 +128,13 @@ namespace Slutprojekt2020
             {
                 Console.WriteLine("You are stuck in this dungeon. " +
                     "\nFight your way through to get out. " +
-                    "\nYou can buy better weapons and armor with the gold you find." +
-                    "\nIn the safe rooms you can heal yourself." +
                     "\nType 'HP?' to see your Health." +
                     "\nType 'DMG?' to see your damage output." +
-                    "\nType 'GoS' to go South." +
                     "\nType 'GoN' to go North." +
+                    "\nType 'GoS' to go South." +
+                    "\nType 'Attack' to attack the enemies in the room." +
+                    "\nType 'Heal' to heal if you are in a Safe Room or a Shop." +
+                    "\nType 'Buy' to buy a DMG upgrade to your Sword." +
                     "\nType 'Help' to get a reminder of this." +
                     "\nGood Luck");
             }
@@ -95,8 +150,36 @@ namespace Slutprojekt2020
             }
             void Info ()
             {
-                Console.WriteLine("There are " + Room.roomList[currentRoom].enemyAmount + " enemys in this room." +
-                    "\n");
+                //Tykte inte det här blev snyggt eftersom man inte kan ha mellanrum i klassnamn.
+                //Jag kanske kunde ha gjort namnet till en string och delat upp den vid den... 
+                //...första stora bokstaven men jag vet inte hur man gör det.
+                //Console.WriteLine("This is a " + Room.roomList[currentRoom].GetType().Name + ".");
+
+                if (Room.roomList[currentRoom].GetType().Name == "Room")
+                {
+                    Console.WriteLine("This is a Standard Room.");
+                }
+                else if (Room.roomList[currentRoom].GetType().Name == "SafeRoom")
+                {
+                    Console.WriteLine("This is a Safe Room. You can Heal here by typing 'Heal'.");
+                }
+                else if (Room.roomList[currentRoom].GetType().Name == "DangerRoom")
+                {
+                    Console.WriteLine("This is a Danger Room. There are usually more enemies in Danger Rooms.");
+                }
+                else if (Room.roomList[currentRoom].GetType().Name == "LootRoom")
+                {
+                    Console.WriteLine("This is a Loot Room. Here be extra loot and no enemies.");
+                }
+                else if (Room.roomList[currentRoom].GetType().Name == "ShopRoom")
+                {
+                    Console.WriteLine("This is a Shop. You can buy a DMG upgrade for 50 gold by typing 'Buy'." +
+                        "\nIt will give you 1 more DMG.");
+                }
+
+                Console.WriteLine("There are " + Room.roomList[currentRoom].enemyAmount + " enemys in this room," +
+                    "\nand" +
+                    "\n" + Room.roomList[currentRoom].goldAmount + " gold coins.");
             }
             string Convert (string inp)
             {
@@ -123,9 +206,21 @@ namespace Slutprojekt2020
                 {
                     outP = 4;
                 }
-                else if (inp == "help")
+                else if (inp == "attack")
                 {
                     outP = 5;
+                }
+                else if (inp == "heal")
+                {
+                    outP = 6;
+                }
+                else if (inp == "buy")
+                {
+                    outP = 7;
+                }
+                else if (inp == "help")
+                {
+                    outP = 8;
                 }
                 else
                 {
@@ -135,7 +230,19 @@ namespace Slutprojekt2020
                 }
                 return outP;
             }
-
+            void End ()
+            {
+                if (p1.hp > 0)
+                {
+                    Console.WriteLine("You escaped the dungeon and got out with " + p1.gold + " gold coins." +
+                        "\nGood job.");
+                }
+                else
+                {
+                    Console.WriteLine("You perished in the dungeon." +
+                        "\nBetter luck next time. Literally.");
+                }
+            }
         }
     }
 }

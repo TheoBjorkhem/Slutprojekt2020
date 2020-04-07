@@ -13,7 +13,7 @@ namespace Slutprojekt2020
         //Metoder
         public DangerRoom()
         {
-            roomList.Add(this);
+            //roomList.Add(this);
             enemyAmount = generator.Next(5, 16);
             goldAmount = generator.Next(10, 21);
         }

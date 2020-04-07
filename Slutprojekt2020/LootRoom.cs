@@ -13,7 +13,7 @@ namespace Slutprojekt2020
         //Metoder
         public LootRoom()
         {
-            roomList.Add(this);
+            //roomList.Add(this);
             enemyAmount = 0;
             goldAmount = generator.Next(5, 16);
         }
