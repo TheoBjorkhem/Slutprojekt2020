@@ -11,6 +11,8 @@ namespace Slutprojekt2020
         //Variabler
         public int enemyAmount = 0;
         public int goldAmount = 0;
+        public bool hasBought = false;
+        public bool hasHealed = false;
         public bool canAttack = false;
         public bool isNorth = false;
         public bool isSouth = false;

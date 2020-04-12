@@ -9,7 +9,6 @@ namespace Slutprojekt2020
     class SafeRoom : Room
     {
         //Variabler
-        public bool hasHealed = true;
 
         //Metoder
         public SafeRoom()
@@ -17,6 +16,7 @@ namespace Slutprojekt2020
             //roomList.Add(this);
             enemyAmount = 0;
             goldAmount = generator.Next(0, 6);
+            hasHealed = false;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Slutprojekt2020
             playerList.Add(this);
             hp = 100;
             dmg = 1;
-            gold = 0;
+            gold = 1;
         }
         
     }
