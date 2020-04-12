@@ -12,7 +12,6 @@ namespace Slutprojekt2020
         public int hp = 0;
         public int dmg = 0;
         public int gold = 0;
-        public int currentRoom = 0;
         Random generator = new Random();
 
         //Även om jag inte ska ha fler spelare så la jag den ändå i en list så att jag skulle kunna komma åt...

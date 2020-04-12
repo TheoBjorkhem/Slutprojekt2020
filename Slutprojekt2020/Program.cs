@@ -89,11 +89,6 @@ namespace Slutprojekt2020
                                 Room.roomList.Add(new ShopRoom());
                                 //Info();
                             }
-                            //Fixar indexeringen när ett nytt Room har skapats.
-                            currentRoom++;
-                            index = currentRoom - 1;
-                            //Kallar på Info metoden.
-                            Info();
                             //Ger en guldet i rummet om det inte finns några fiender. Lite klumpigt gjort att ha den koden på..
                             //...2 ställen men jag kom inte på att man behövde kunna ta upp guld även utan fiender förens mot...
                             //...slutet av projektet.
@@ -102,6 +97,12 @@ namespace Slutprojekt2020
                                 //Ger en rummets guld.
                                 Player.playerList[0].gold = Player.playerList[0].gold + Room.roomList[index].goldAmount;
                             }
+                            //Fixar indexeringen när ett nytt Room har skapats.
+                            currentRoom++;
+                            index = currentRoom - 1;
+                            //Kallar på Info metoden.
+                            Info();
+
                         }
                         //Man måste besegra fienderna först.
                         else if (Room.roomList[index].enemyAmount > 0)

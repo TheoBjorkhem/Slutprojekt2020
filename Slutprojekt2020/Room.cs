@@ -14,9 +14,6 @@ namespace Slutprojekt2020
         public int goldAmount = 0;
         public bool hasBought = false;
         public bool hasHealed = false;
-        public bool canAttack = false;
-        public bool isNorth = false;
-        public bool isSouth = false;
         static public Random generator = new Random();
 
         //Listan med alla rum.
