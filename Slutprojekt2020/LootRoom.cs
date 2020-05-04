@@ -17,7 +17,10 @@ namespace Slutprojekt2020
             enemyAmount = 0;
             goldAmount = generator.Next(5, 16);
         }
-
-
+        public override void Info()
+        {
+            Console.WriteLine("This is a Loot Room. Here be extra loot and no enemies." +
+                "\nThere are " + this.goldAmount + " gold coins in this room.");
+        }
     }
 }

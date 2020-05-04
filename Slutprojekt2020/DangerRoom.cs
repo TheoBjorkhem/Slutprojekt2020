@@ -17,6 +17,12 @@ namespace Slutprojekt2020
             enemyAmount = generator.Next(5, 16);
             goldAmount = generator.Next(10, 21);
         }
-
+        public override void Info()
+        {
+            Console.WriteLine("This is a Danger Room. There are usually more enemies in Danger Rooms." +
+                "\nThere are " + this.enemyAmount + " enemys in this room," +
+                "\nand" +
+                "\n" + this.goldAmount + " gold coins.");
+        }
     }
 }
