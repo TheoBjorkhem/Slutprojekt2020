@@ -30,8 +30,17 @@ namespace Slutprojekt2020
             {
                 Console.WriteLine("You healed back to full health.");
                 //Borde egentligen göra en int för spelarens max HP men jag hann aldrig gör HP uppgraderingar ändå.
-                p1.hp = 100;
-                this.hasHealed = true;
+                if (Player.playerList[Player.GetCurrentP()].GetHp() >= 100)
+                {
+                    Console.WriteLine("You already have full health.");
+                }
+                else
+                {
+                    int i = 100 - Player.playerList[Player.GetCurrentP()].GetHp();
+                    p1.SetHp(i);
+                    this.hasHealed = true;
+                }
+
             }
         }
         public override void Info()

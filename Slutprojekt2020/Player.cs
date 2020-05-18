@@ -9,17 +9,18 @@ namespace Slutprojekt2020
     public class Player
     {
         //Variabler
-        public int hp = 0;
-        public int dmg = 0;
-        public int gold = 0;
-        Random generator = new Random();
+        private int hp = 0;
+        private int dmg = 0;
+        private int gold = 0;
+        static private int currentP = 0;
+        static private Random generator = new Random();
 
         //Även om jag inte ska ha fler spelare så la jag den ändå i en list så att jag skulle kunna komma åt...
         //...instansen av den här klassen utan att göra alla variabler statiska. Jag tyckte det var en bättre lösning.
         static public List<Player> playerList = new List<Player>();
 
         //Metoder
-        public Player ()
+        public Player()
         {
             playerList.Add(this);
             hp = 100;
@@ -36,21 +37,45 @@ namespace Slutprojekt2020
         public virtual void Attack(Room room)
         {
             //Kollar om det finns fiender i rummet.
-            if (room.enemyAmount >= 1)
+            if (room.GetEnemyAmount() > 0)
             {
                 //Spelaren tar skada beroende på hur många fiender det är och hur mycket DMG spelaren har.
-                this.hp = this.hp - (room.enemyAmount / this.dmg);
+                int initialAmount = room.GetEnemyAmount();
+                for (int i = room.GetEnemyAmount(); room.GetEnemyAmount() > 0;)
+                {
+                    room.SetEnemyAmount(room.GetEnemyAmount() - this.dmg);
+                    this.hp -= 1;
+                }
+
+                //this.hp = this.hp - (room.enemyAmount / this.dmg);
                 //Kollar om man lever.
                 if (this.hp > 0)
                 {
                     //Ger en rummets guld.
-                    this.gold = this.gold + room.goldAmount;
-                    Console.WriteLine("You defeated all " + room.enemyAmount + " enemies and took the " +
-                        room.goldAmount + " gold coin(s)." +
+                    this.gold = this.gold + room.GetGoldAmount();
+                    Console.WriteLine("You defeated all " + initialAmount + " enemies and took the " +
+                        room.GetGoldAmount() + " gold coin(s)." +
                         "\nYou now have " + this.gold + " gold coins.");
                     //Fixar värdena på rummet.
-                    room.enemyAmount = 0;
-                    room.goldAmount = 0;
+                    room.SetEnemyAmount(0);
+                    room.SetGoldAmount(0);
+
+                    int i = generator.Next(0, 100);
+                    if (i > 0 && i < 11)
+                    {
+                        Console.WriteLine("You found a mysterious potion. Type 'Drink' to drink it.");
+                        i = generator.Next(0, 2);
+                        if (i == 0)
+                        {
+                            Potion.potionStack.Push(new HealthPot());
+                        }
+                        else
+                        {
+                            Potion.potionStack.Push(new OuchPot());
+                        }
+                    }
+
+
                 }
                 //Du dog.
                 else if (this.hp < 1)
@@ -64,5 +89,41 @@ namespace Slutprojekt2020
                 Console.WriteLine("There are no enemies in this room.");
             }
         }
+
+        //Metoder som handlar variabler med främmande länder.
+        public void SetHp(int newHp)
+        {
+            hp = hp + newHp;
+        }
+        public int GetHp()
+        {
+            return hp;
+        }
+        public void AddDMG(int addDMG)
+        {
+            dmg = dmg + addDMG;
+        }
+        public int GetDMG()
+        {
+            return dmg;
+        }
+        public void AddGold(int addGold)
+        {
+            gold = gold + addGold;
+        }
+        public int GetGold()
+        {
+            return gold;
+        }
+        static public int GetCurrentP()
+        {
+            return currentP;
+        }
+        /*
+        static public void SetCurrentP(int newCurrentP)
+        {
+            currentP = newCurrentP;
+        }
+        */
     }
 }

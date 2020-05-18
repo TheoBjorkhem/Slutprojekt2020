@@ -9,16 +9,16 @@ namespace Slutprojekt2020
     public class Room
     {
         //Variabler
-        public int goldAmount = 0;
-        public int enemyAmount = 0;
-        public bool hasHealed = false;
-        static public Random generator = new Random();
+        protected int goldAmount = 0;
+        protected int enemyAmount = 0;
+        protected bool hasHealed = false;
+        static protected Random generator = new Random();
 
         //Listan med alla rum.
         static public List<Room> roomList = new List<Room>();
 
         //Metoder
-        public Room ()
+        public Room()
         {
             //Insåg att det var lättare att lägga till den i en lista i main istället för här.
             //roomList.Add(this);
@@ -38,5 +38,34 @@ namespace Slutprojekt2020
                 "\nand" +
                 "\n" + this.goldAmount + " gold coins.");
         }
+
+        //Metoder som handlar variabler med främmande länder.
+        public int GetGoldAmount()
+        {
+            return goldAmount;
+        }
+        public void SetGoldAmount(int setGold)
+        {
+            goldAmount = setGold;
+        }
+        public int GetEnemyAmount()
+        {
+            return enemyAmount;
+        }
+        public void SetEnemyAmount(int setEnemy)
+        {
+            enemyAmount = setEnemy;
+        }
+
+        /*
+        public List<Room> GetRoomList()
+        {
+            return roomList;
+        }
+        public void SetRoomList(List<Room> setList)
+        {
+
+        }
+        */
     }
 }

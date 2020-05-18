@@ -9,8 +9,8 @@ namespace Slutprojekt2020
     class ShopRoom : SafeRoom
     {
         //Variabler
-        public int itemPrice = 50;
-        public bool hasBought = false;
+        private int itemPrice = 50;
+        private bool hasBought = false;
 
         //Metoder
         public ShopRoom()
@@ -22,13 +22,13 @@ namespace Slutprojekt2020
         public override void Buy(Player p1)
         {
             //Kollar att man inte redan har köpt här, att man har guld nog, och att man är i en affär.
-            if (hasBought == false && (Player.playerList[0].gold >= itemPrice))
+            if (hasBought == false && (Player.playerList[Player.GetCurrentP()].GetGold() >= itemPrice))
             {
                 //Ger en mer DMG. Ser till att man inte kan köpa i den affären igen och tar guldet från en.
-                Player.playerList[0].dmg++;
-                Console.WriteLine("You bought the upgrade an now have " + Player.playerList[0].dmg + " DMG.");
+                Player.playerList[Player.GetCurrentP()].AddDMG(1);
+                Console.WriteLine("You bought the upgrade an now have " + Player.playerList[Player.GetCurrentP()].GetDMG() + " DMG.");
                 hasBought = true;
-                Player.playerList[0].gold = Player.playerList[0].gold - itemPrice;
+                Player.playerList[Player.GetCurrentP()].AddGold(-itemPrice);
             }
             //Om man redan har köpt här.
             else if (hasBought == true)
@@ -36,7 +36,7 @@ namespace Slutprojekt2020
                 Console.WriteLine("You have already bought the upgrade in this shop. Look for a new one.");
             }
             //Om man inte har guld nog.
-            else if (hasBought == false && (Player.playerList[0].gold < itemPrice))
+            else if (hasBought == false && (Player.playerList[Player.GetCurrentP()].GetGold() < itemPrice))
             {
                 Console.WriteLine("You do not have enough gold coins. You need " + itemPrice + ".");
             }
@@ -47,5 +47,6 @@ namespace Slutprojekt2020
                 "\nIt will give you 1 more DMG." +
                 "\nThere are " + this.goldAmount + " gold coins in this room.");
         }
+
     }
 }
